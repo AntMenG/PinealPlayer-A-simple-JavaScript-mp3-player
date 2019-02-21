@@ -1,0 +1,153 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.color {
+    color: grey;
+    transition: color linear 0.2s;
+}
+
+.background {
+    background: grey;
+    transition: background linear 0.2s;
+}
+
+body {
+    width: 100%;
+    margin: 0 0;
+    height: 100%;
+    padding: 0 0;
+    overflow: hidden;
+    background: white;
+}
+
+.blur {
+    backdrop-filter: blur(20px);  
+    -webkit-backdrop-filter: blur(20px);
+}
+
+#app {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+header {
+    top: 0px;
+    right: 0px;
+    height: 0px;
+    z-index: 600;
+    position: fixed;
+    width: calc(100% - 450px);
+    box-shadow: 0px 0px 40px 20px rgb( 245, 245, 245);
+}
+
+header #titleBar {
+    top: 10px;
+    right: 0px;
+    width: 220px;
+    height: 30px;
+    position: absolute;
+    background: rgb( 255, 255, 255);
+    border-radius: 12px 0px 0px 12px;
+    box-shadow: 0px 0px 30px rgba(158, 60, 43, 0.3);
+}
+
+header #titleBar span {
+    float: left;
+    width: 130px;
+    height: 30px;
+    display: block;
+    color: grey;
+    line-height: 29px;
+    font-weight: bold;
+    text-align: center;
+    -webkit-app-region: drag;
+}
+
+header #titleBar .btns {
+    width: 90px;
+    height: 30px;
+    float: right;
+    background: rgba( 1, 1, 1, 0.02);
+}
+
+header #titleBar .btns button {
+    width: 24px;
+    float: left;
+    height: 24px;
+    outline: none;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border: solid 0px;
+    position: relative;
+    background: grey;
+    border-radius: 50% 50%;
+    box-shadow: 0px 0px !important;
+}
+
+header #titleBar .btns button:nth-child(2n) {
+    background: grey;
+}
+
+header #titleBar .btns button#minimize::after {
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 0px;
+    content: "";
+    color: white;
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 4px 4px;
+    transform: translate(-50%, -50%);
+    border-bottom: solid 1px;
+    border-top: solid 1px;
+}
+
+header #titleBar .btns button#maximize::after {
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 60%;
+    content: "";
+    color: white;
+    border: solid 2px;
+    position: absolute;
+    border-radius: 50% 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+}
+
+header #titleBar .btns button#close::after {
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 0px;
+    content: "";
+    color: white;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: solid 1.5px;
+    border-top: solid 1.5px;
+    border-radius: 4px 4px;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+header #titleBar .btns button#close::before {
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 0px;
+    content: "";
+    color: white;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: solid 1.5px;
+    border-top: solid 1.5px;
+    border-radius: 4px 4px;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
