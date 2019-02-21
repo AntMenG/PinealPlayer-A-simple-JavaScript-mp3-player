@@ -1,77 +1,70 @@
-const remote = require('electron').remote;
-const glob = require('glob');
 const coverArt = require('cover-art');
 const jsmediatags = require("jsmediatags");
 const cont = document.getElementById("cont");
 var audio = document.getElementById("audio");
- 
-const currentWindow = remote.getCurrentWindow();
 
-const app = remote.app;
-
-var mp3 = glob.sync(app.getPath('music') + '/*.mp3');
-
-var music = {}, store = currentWindow.music;
+var music = {};
 var sounds = 0;
 
-const storage = require('electron-json-storage');
-
 //Create list
-mp3.forEach((mp3) => {
-	if (store[mp3]) {
-		music[mp3] = store[mp3];
-		music[mp3].index = sounds
-	} else {
-		console.log('nuevo');
-		var name = mp3.split("/");
-		music[mp3] = { 
-			id: mp3,
-			index: sounds,
-			name: name[name.length - 1].split('.mp3')[0],
-			path: mp3
-		};
-	}
-	var button = document.createElement('button');
-	button.setAttribute('id', music[mp3].id);
-	button.setAttribute('value', music[mp3].id);
-	button.classList = 'list';
-	button.addEventListener('click', (e) => {
-		var more = e.target.id[0] + e.target.id[1] + e.target.id[2]
-		if(
-			!e.target.getAttribute('data-function')
-		) {
-			setAudio(music[mp3])
+function init () {
+	mp3.forEach((mp3) => {
+		if (store[mp3]) {
+			music[mp3] = store[mp3];
+			music[mp3].index = sounds
+		} else {
+			console.log('nuevo');
+			var name = mp3.split("/");
+			music[mp3] = { 
+				id: mp3,
+				index: sounds,
+				name: name[name.length - 1].split('.mp3')[0],
+				path: mp3
+			};
 		}
+		var button = document.createElement('button');
+		button.setAttribute('id', music[mp3].id);
+		button.setAttribute('value', music[mp3].id);
+		button.classList = 'list';
+		button.addEventListener('click', (e) => {
+			var more = e.target.id[0] + e.target.id[1] + e.target.id[2]
+			if(
+				!e.target.getAttribute('data-function')
+			) {
+				setAudio(music[mp3])
+			}
+		});
+		// Número
+		var span = document.createElement('span');
+		span.appendChild(document.createTextNode(music[mp3].index + 1));
+		span.setAttribute('data-attr','number');
+		span.classList = 'background';
+		button.appendChild(span);
+		// Nombre
+		span = document.createElement('span');
+		span.appendChild(document.createTextNode(music[mp3].name));
+		span.setAttribute('data-attr','nombre');
+		span.classList = 'color';
+		button.appendChild(span);
+		var moreButton = document.createElement('button');
+		// Options button
+		moreButton.setAttribute('id','more' + music[mp3].id);
+		moreButton.setAttribute('data-function','more');
+		moreButton.style = 'width: 30px; height: 30px;';
+		moreButton.classList = 'color';
+		button.appendChild(moreButton);
+		cont.appendChild(button);
+		sounds++;
 	});
-	// Número
-	var span = document.createElement('span');
-	span.appendChild(document.createTextNode(music[mp3].index + 1));
-	span.setAttribute('data-attr','number');
-	span.classList = 'background';
-	button.appendChild(span);
-	// Nombre
-	span = document.createElement('span');
-	span.appendChild(document.createTextNode(music[mp3].name));
-	span.setAttribute('data-attr','nombre');
-	span.classList = 'color';
-	button.appendChild(span);
-	var moreButton = document.createElement('button');
-	// Options button
-	moreButton.setAttribute('id','more' + music[mp3].id);
-	moreButton.setAttribute('data-function','more');
-	moreButton.style = 'width: 30px; height: 30px;';
-	moreButton.classList = 'color';
-	button.appendChild(moreButton);
-	cont.appendChild(button);
-	sounds++;
-});
-
-storage.set('music', music, function(error) {
-	if (error) throw error;
-});
+	
+	storage.set('music', music, function(error) {
+		if (error) throw error;
+	});
+}
 
 function findPic (mp3, artist, title, img) {
 	coverArt(artist, title, function (err, url) {		
+		console.log(artist);
 		if (err) console.log ;
 		if (url) {
 			img.setAttribute('src', url);
@@ -150,7 +143,7 @@ function setAudio (mp3, start) {
 	}
 }
 
-
+// Vibrant
 var picCont = document.getElementById('pic'),
 		image = picCont.getElementsByTagName('img')[0];
 

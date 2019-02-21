@@ -14,9 +14,5 @@ app.on('ready', () => {
 			nodeIntegration: true
 		}
 	});
-	storage.get('music', function(error, data) {
-		if (error) throw error;
-		win['music'] = data;
-	});
 	win.loadURL(`file://${__dirname}/view/index.html`);
 });
