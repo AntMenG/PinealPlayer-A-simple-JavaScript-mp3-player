@@ -35,6 +35,15 @@ function initControls () {
 		);
 	});
 
+    const animateScrollTo = require('animated-scroll-to');
+    const options = {
+        speed: 500,
+        minDuration: 250,
+        maxDuration: 1500,
+        element: document.querySelector('#space'),
+        offset: 0,
+        //onComplete: function() {}
+    };
 	function last_next (index) {
 		var output = Object.keys(music)[index];
 		if (output) {
@@ -45,7 +54,15 @@ function initControls () {
 			} else if (index == sounds) {
 				console.log('Fin de Canciones');
 			}
-		}
+        }
+        var space = document.getElementById('space');
+        var spaceHeight = space.offsetHeight;
+        var musicPosition = ((index * 40) - spaceHeight) + 90;
+        if (space.scrollTop <= musicPosition) {
+            animateScrollTo(musicPosition, options);
+        } else if (space.scrollTop >= index * 40) {
+            animateScrollTo(index * 40, options);
+        }
 	}
 
 	// Progress Control
