@@ -6,7 +6,7 @@ const storage = require('electron-json-storage');
 //currentWindow.music
 
 const app = remote.app;
-var mp3 = glob.sync(app.getPath('music') + '/*.mp3');
+var mp3 = glob.sync(app.getPath('music') + '/**/*.mp3');
 var store;
 storage.get('music', function(error, data) {
 	if (error) throw error;
