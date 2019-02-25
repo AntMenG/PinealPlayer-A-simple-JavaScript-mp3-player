@@ -1,5 +1,23 @@
 var picCont = document.getElementById('pic'),
-    image = picCont.getElementsByTagName('img')[0];
+	image = picCont.getElementsByTagName('img')[0];
+	
+const toDataURL = url => fetch(url)
+.then(response => response.blob())
+.then(blob => new Promise((resolve, reject) => {
+	const reader = new FileReader()
+	reader.onloadend = () => resolve(reader.result)
+	reader.onerror = reject
+	reader.readAsDataURL(blob)
+}));
+
+function createPath (item, url) {
+	toDataURL(url).then(dataUrl => {
+		if (dataUrl) {
+			music[item].pic = dataUrl;
+			console.log('cover path');
+		}
+	})
+}
 
 image.addEventListener('load', function() {
 	var vibrantHex;
@@ -15,11 +33,13 @@ image.addEventListener('load', function() {
 			vibrantHex = 'cadetblue'
 		}
 		console.log(`color: ${vibrantHex};`);
-		music[musicId].color = vibrantHex;
-		storage.set('music', music, function(error) {
-			if (error) throw error;
-			console.log("saved");
-		});
+		if (!image.getAttribute('data-error') == '1') {
+			music[musicId].color = vibrantHex;
+			storage.set('music', music, function(error) {
+				if (error) throw error;
+				console.log("saved");
+			});
+		}
 	}
 	document.getElementById('player').style = `background: ${vibrantHex};`;
 	var color = document.getElementsByClassName('color');
