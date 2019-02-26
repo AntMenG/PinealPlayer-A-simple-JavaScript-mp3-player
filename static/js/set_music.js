@@ -65,20 +65,28 @@ function init () {
 function findPic (mp3, artist, title, img) {
 	coverArt(artist, title, function (err, url) {		
 		console.log(artist);
-		if (err) console.log ;
-		if (url) {
-			img.setAttribute('src', url);
-			music[mp3.id].pic = url;
+		if (!err) {
+			img.setAttribute('data-error', '0');
+			if (url) {
+				img.setAttribute('src', url);
+				music[mp3.id].pic = url;
+				createPath(mp3.id, url);
+			} else {
+				coverArt(artist, null, function (err, url) {
+					if (url) {
+						img.setAttribute('src', url);
+						music[mp3.id].pic = url;
+						createPath(mp3.id, url);
+					} else {
+						img.setAttribute('src', '../static/img/img.png');
+						music[mp3.id].pic = '../static/img/img.png';
+						createPath(mp3.id, '../static/img/img.png');
+					}
+				});
+			}
 		} else {
-			coverArt(artist, null, function (err, url) {
-				if (url) {
-					img.setAttribute('src', url);
-					music[mp3.id].pic = url;
-				} else {
-					img.setAttribute('src', '../static/img/img.png');
-					music[mp3.id].pic = '../static/img/img.png';
-				}
-			});
+			img.setAttribute('data-error', '1');
+			img.setAttribute('src', '../static/img/img.png');
 		}
 	});
 }
