@@ -199,7 +199,6 @@
     transform: translate(-50%, -50%);
 }
 
-#app #container #space #cont button.list:hover button,
 #app #container #space #cont button.list.active button {
     color: white !important;
 }
