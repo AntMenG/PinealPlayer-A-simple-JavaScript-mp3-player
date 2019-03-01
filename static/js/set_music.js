@@ -18,7 +18,7 @@ function init () {
 			music[mp3] = { 
 				id: mp3,
 				index: sounds,
-				name: name[name.length - 1].split('.mp3')[0],
+				name: name[name.length - 1].split('.mp3')[0].split('.m4a')[0],
 				path: mp3
 			};
 		}
@@ -85,6 +85,8 @@ function findPic (mp3, artist, title, img) {
 				});
 			}
 		} else {
+			img.style = '';
+			console.log(err);
 			img.setAttribute('data-error', '1');
 			img.setAttribute('src', '../static/img/img.png');
 		}
@@ -106,6 +108,7 @@ function findTags (mp3, img) {
 		onError: function(error) {
 			console.log(':(', error.type, error.info);
 			img.setAttribute('src', '../static/img/img.png');
+			img.style = '';
 			music[mp3.id].pic = '../static/img/img.png';
 		}
 	});
@@ -119,10 +122,12 @@ function setAudio (mp3, start) {
 	var pic = document.getElementById('pic'),
 		img = pic.getElementsByTagName('img')[0];
 		img.setAttribute('data-id',mp3.id);
+	img.style = 'filter: blur(8px);';
 	if (!mp3.pic) {
 		findTags(mp3, img);
 	} else {
 		img.setAttribute('src', mp3.pic);
+		img.style = '';
 	}
 	if (lastPick) {
 		lastPick.setAttribute('class','list')

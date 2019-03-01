@@ -3,13 +3,13 @@
 }
 
 .color {
-    color: grey;
-    transition: color linear 0.2s;
+    color: cadetblue;
+    transition: all linear 0.2s;
 }
 
 .background {
-    background: grey;
-    transition: background linear 0.2s;
+    background: cadetblue;
+    transition: all linear 0.2s;
 }
 
 body {
@@ -60,7 +60,7 @@ header #titleBar span {
     width: 130px;
     height: 30px;
     display: block;
-    color: grey;
+    color: cadetblue;
     line-height: 29px;
     font-weight: bold;
     text-align: center;
@@ -84,13 +84,13 @@ header #titleBar .btns button {
     margin-right: 3px;
     border: solid 0px;
     position: relative;
-    background: grey;
+    background: cadetblue;
     border-radius: 50% 50%;
     box-shadow: 0px 0px !important;
 }
 
 header #titleBar .btns button:nth-child(2n) {
-    background: grey;
+    background: cadetblue;
 }
 
 header #titleBar .btns button#minimize::after {

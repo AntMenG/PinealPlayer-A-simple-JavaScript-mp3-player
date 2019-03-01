@@ -11,6 +11,7 @@ const toDataURL = url => fetch(url)
 }));
 
 function createPath (item, url) {
+	image.style = '';
 	toDataURL(url).then(dataUrl => {
 		if (dataUrl) {
 			music[item].pic = dataUrl;
@@ -32,8 +33,7 @@ image.addEventListener('load', function() {
 		} else {
 			vibrantHex = 'cadetblue'
 		}
-		console.log(`color: ${vibrantHex};`);
-		if (!image.getAttribute('data-error') == '1') {
+		if (!image.getAttribute('data-error') == '0') {
 			music[musicId].color = vibrantHex;
 			storage.set('music', music, function(error) {
 				if (error) throw error;
@@ -41,18 +41,11 @@ image.addEventListener('load', function() {
 			});
 		}
 	}
-	document.getElementById('player').style = `background: ${vibrantHex};`;
-	var color = document.getElementsByClassName('color');
-	var background = document.getElementsByClassName('background');
-	for (var i = 0; i < color.length; i++) {
-		color[i].style = `color: ${vibrantHex};`;
-	}
-	for (var i = 0; i < background.length; i++) {
-		background[i].style = `
-			background: ${vibrantHex}; 
-			box-shadow: 0px 0px 45px ${vibrantHex};
-		`;
-	}
+	setColor(vibrantHex);
+	// Results into: Vibrant Muted DarkVibrant DarkMuted LightVibrant
+});
+
+function setColor (vibrantHex) {
 	document.getElementById('style').innerHTML = `
 		::-webkit-scrollbar {
 			width: 8px;
@@ -61,6 +54,13 @@ image.addEventListener('load', function() {
 		::-webkit-scrollbar-thumb {
 			background: ${vibrantHex};
 			width: 2px !important;
+		}
+		.color {
+			color: ${vibrantHex} !important;
+		}
+		.background {
+			background: ${vibrantHex} !important; 
+			box-shadow: 0px 0px 45px ${vibrantHex};
 		}
 		#app #player #pic,
 		#app #player #bar #progress #pbar,
@@ -86,5 +86,4 @@ image.addEventListener('load', function() {
 			text-shadow: 0px 0px 2px ${vibrantHex} !important;
 		}
 	`;
-	// Results into: Vibrant Muted DarkVibrant DarkMuted LightVibrant
-});
+}
